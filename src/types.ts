@@ -1,24 +1,39 @@
 
-export interface Cities {
-    id: string;
-    name: string
+export interface MainWeatherData {
+  temp: number;
+  feels_like: number;
+  humidity: number;
+}
+
+export interface WeatherInfo {
+  id: number;
+  main: string;
+  description: string;
+  icon: string;
 }
 
 export interface City {
-  [city: string]: Cities;
+  id: number;
+  name: string;
 }
 
-export interface ApiWeather {
-  id: string;
-  dt_txt: string;
-  weather: {
-    description: string;
-    icon: string;
-  }
-  main: {
-    humidity: string;
-    windSpeed: string;
-    temp: string;
-    feels_like: string
-  }
+export interface ForecastItem {
+  dt: number;
+  main: MainWeatherData;
+  weather: WeatherInfo[];
 }
+
+export interface ForecastResponse {
+  cod: string;
+  list: ForecastItem[];
+  city: City;
+}
+
+export interface WeatherData {
+  id: number;
+  name: string;
+  main: MainWeatherData;
+  weather: WeatherInfo[];
+  dt: number;
+}
+

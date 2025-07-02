@@ -20,12 +20,12 @@
 
         <div v-if="suggestions.length" class="suggestions">
           <div
-            v-for="(item, index) in suggestions"
-            :key="index"
+            v-for="city in suggestions"
+            :key="city.id"
             class="suggestion"
-            @click="selectCity(item)"
+            @click="selectCity(city)"
           >
-            {{ item }}
+            {{ city.name }}
           </div>
         </div>
       </div>
@@ -36,14 +36,15 @@
 <script setup lang="ts">
 import '../input/inputStyle/style.css';
 import { reactive, ref } from 'vue';
-import {useWeatherStore} from "@/stores/weatherStore/weatherStore.ts";
+import { useWeatherStore } from "@/stores/weatherStore/weatherStore.ts";
+import type { City } from "@/types.ts";
 
 const store = useWeatherStore();
 const form = reactive({
   search: '',
 });
 
-const suggestions = ref<string[]>([]);
+const suggestions = ref<City[]>([]);
 const timeout = ref<ReturnType<typeof setTimeout> | null>(null);
 
 const onFieldChange = (event: Event) => {
@@ -53,11 +54,23 @@ const onFieldChange = (event: Event) => {
 
   if (timeout.value) clearTimeout(timeout.value);
 
+  if (!value.trim()) {
+    suggestions.value = [];
+    return;
+  }
+
   timeout.value = setTimeout(async () => {
-    console.log(form.search);
-    await store.fetchCities(form.search);
-    console.log(store.items.values);
-  }, 1000);
+    try {
+      const city = await store.fetchCities(form.search);
+      if (city) {
+        suggestions.value = [city];
+      } else {
+        suggestions.value = [];
+      }
+    } catch (error) {
+      suggestions.value = [];
+    }
+  }, 500);
 };
 
 const clearInput = () => {
@@ -65,8 +78,9 @@ const clearInput = () => {
   suggestions.value = [];
 };
 
-const selectCity = (city: string) => {
-  form.search = city;
+const selectCity = (city: City) => {
+  form.search = city.name;
   suggestions.value = [];
+
 };
 </script>
