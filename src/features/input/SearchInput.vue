@@ -16,8 +16,12 @@
           type="button"
         >×</button>
       </div>
-
-      <button class="search-button" type="button" @click="onClick">
+      <button
+        v-for="item in store.items"
+        class="search-button"
+        type="button"
+        @click="() => onClick(item.id)"
+      >
         Find
       </button>
     </form>
@@ -33,15 +37,26 @@ import { useRouter } from "vue-router";
 const store = useWeatherStore();
 const search = ref('');
 const router = useRouter();
+let debounceTimer: number | null = null;
+
 
 const onFieldChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
   search.value = target.value;
+
+  if (debounceTimer) {
+    clearTimeout(debounceTimer);
+  }
+
+  debounceTimer = setTimeout(() => {
+    if (target.value.length > 2) {
+      store.fetchCity(target.value);
+    }
+  }, 700);
 };
 
-const onClick = async (id: string) => {
-  await store.fetchCity(search.value);
-  await router.push(`/weather/${id}`)
+const onClick = async (cityId: string) => {
+  await router.push(`/weather/${cityId}`);
 };
 
 const clearInput = () => {
