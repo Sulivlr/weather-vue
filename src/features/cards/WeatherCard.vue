@@ -21,11 +21,9 @@
 </template>
 
 
-<script setup>
-import { ref } from 'vue'
+<script setup lang="ts">
 import '@/features/cards/cardStyle/style.css'
 
-const city = ref('')
 const cityName = 'Бишкек'
 const description = 'Переменная облачность'
 const temperature = 22
@@ -38,8 +36,5 @@ const isDay = hour >= 6 && hour < 18
 const icon = `03${isDay ? 'd' : 'n'}`
 const iconUrl = `https://openweathermap.org/img/wn/${icon}@4x.png`
 
-function onSearch() {
-  alert(`Вы ищете погоду для: ${city.value}`)
-}
 </script>
 

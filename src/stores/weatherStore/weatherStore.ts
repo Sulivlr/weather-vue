@@ -2,30 +2,25 @@
 import {defineStore} from "pinia";
 import {ref} from "vue";
 import axiosApi from "@/axiosApi.ts";
-import type {ForecastResponse, City, WeatherData} from "@/types.ts";
+import type {ForecastResponse, City} from "@/types.ts";
 
 export const useWeatherStore = defineStore('weatherStore', () => {
   const items = ref<City[]>([]);
-  const oneWeather = ref<WeatherData | null>(null);
+  const oneWeather = ref<ForecastResponse | null>(null);
   const isFetching = ref(false);
   const isSearching = ref(false);
 
-  const fetchCities = async (cityName: string): Promise<City | null> => {
+  const fetchCity = async (cityName: string) => {
     isSearching.value = true;
     try {
-      const {data} = await axiosApi.get<ForecastResponse | null>(`/forecast?appid=5f752d58b77db9b3d3faa06003260874&q=${cityName}`);
-      if (data === null) {
-        return null;
-      }
-      const city = data.city;
-
-      const existingCity = items.value.find(item => item.id === city.id);
-      if (!existingCity) {
-        items.value.push(city);
-      }
-
-      return city;
-    }  finally {
+      const {data: city} = await axiosApi.get<City | null>(`/weather?&appid=5f752d58b77db9b3d3faa06003260874&q=${cityName}`);
+      console.log(city)
+      if (city === null) {
+       return null;
+     }
+     items.value = [city];
+     return city;
+    } finally {
       isSearching.value = false;
     }
   };
@@ -33,9 +28,10 @@ export const useWeatherStore = defineStore('weatherStore', () => {
   const fetchOneCity = async (id: string) => {
     isFetching.value = true;
     try {
-      const {data} = await axiosApi.get<WeatherData | null>(`weather?appid=5f752d58b77db9b3d3faa06003260874&id=${id}`);
+      const {data} = await axiosApi.get<ForecastResponse | null>(`/weather?appid=5f752d58b77db9b3d3faa06003260874&id=${id}`);
+      console.log(data)
       if (data === null) {
-        return [];
+        return null;
       }
       oneWeather.value = data;
       return data;
@@ -49,7 +45,7 @@ export const useWeatherStore = defineStore('weatherStore', () => {
     oneWeather,
     isFetching,
     isSearching,
-    fetchCities,
+    fetchCity,
     fetchOneCity,
   };
 });

@@ -1,86 +1,51 @@
 <template>
   <div class="form-container">
-    <form class="weather-form">
+    <form class="weather-form" @submit.prevent>
       <div class="input-wrapper">
         <input
-          v-model="form.search"
+          v-model="search"
           @input="onFieldChange"
           type="text"
           name="search"
           placeholder="Select a city"
           class="city-input"
         />
-
         <button
           @click.prevent="clearInput"
           class="clear-button"
           type="button"
-        >×
-        </button>
-
-        <div v-if="suggestions.length" class="suggestions">
-          <div
-            v-for="city in suggestions"
-            :key="city.id"
-            class="suggestion"
-            @click="selectCity(city)"
-          >
-            {{ city.name }}
-          </div>
-        </div>
+        >×</button>
       </div>
+
+      <button class="search-button" type="button" @click="onClick">
+        Find
+      </button>
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
 import '../input/inputStyle/style.css';
-import { reactive, ref } from 'vue';
-import { useWeatherStore } from "@/stores/weatherStore/weatherStore.ts";
-import type { City } from "@/types.ts";
+import { ref } from 'vue';
+import { useWeatherStore } from '@/stores/weatherStore/weatherStore.ts';
+import { useRouter } from "vue-router";
 
 const store = useWeatherStore();
-const form = reactive({
-  search: '',
-});
-
-const suggestions = ref<City[]>([]);
-const timeout = ref<ReturnType<typeof setTimeout> | null>(null);
+const search = ref('');
+const router = useRouter();
 
 const onFieldChange = (event: Event) => {
-  const { name, value } = event.target as HTMLInputElement;
+  const target = event.target as HTMLInputElement;
+  search.value = target.value;
+};
 
-  form[name as keyof typeof form] = value;
-
-  if (timeout.value) clearTimeout(timeout.value);
-
-  if (!value.trim()) {
-    suggestions.value = [];
-    return;
-  }
-
-  timeout.value = setTimeout(async () => {
-    try {
-      const city = await store.fetchCities(form.search);
-      if (city) {
-        suggestions.value = [city];
-      } else {
-        suggestions.value = [];
-      }
-    } catch (error) {
-      suggestions.value = [];
-    }
-  }, 500);
+const onClick = async (id: string) => {
+  await store.fetchCity(search.value);
+  await router.push(`/weather/${id}`)
 };
 
 const clearInput = () => {
-  form.search = '';
-  suggestions.value = [];
-};
-
-const selectCity = (city: City) => {
-  form.search = city.name;
-  suggestions.value = [];
-
+  search.value = '';
+  store.items = [];
 };
 </script>

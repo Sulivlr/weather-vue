@@ -6,8 +6,8 @@ import DayNightButton from "@/UI/AppBar/toggleTheme/DayNightButton.vue";
 
 <template>
   <header class="app-bar">
-    <h1 class="app-title">Weather App</h1>
-    <DayNightButton/>
+    <RouterLink to="/" class="app-title">Weather App</RouterLink>
+    <DayNightButton />
   </header>
   <div class="date-time">
     {{

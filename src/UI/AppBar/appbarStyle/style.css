@@ -13,23 +13,30 @@ body {
 }
 
 .app-bar {
-  padding: 20px 20px;
+  padding: 20px;
   top: 0;
   margin-bottom: 40px;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  background-color: var(--app-bar-bg);
-  color: var(--app-bar-text);
+  background-color: var(--app-bar-bg, #282c34);
+  color: var(--app-bar-text, #ffffff);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .app-title {
-  margin: 0;
   font-size: 24px;
   font-weight: bold;
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
 }
+
+.app-title:hover {
+  color: #90caf9;
+}
+
 
 .theme-toggle-btn {
   cursor: pointer;
