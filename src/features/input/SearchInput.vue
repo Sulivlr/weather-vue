@@ -49,10 +49,10 @@ const onFieldChange = (event: Event) => {
   }
 
   debounceTimer = setTimeout(() => {
-    if (target.value.length > 2) {
+    if (target.value.length >= 2) {
       store.fetchCity(target.value);
     }
-  }, 300);
+  }, 500);
 };
 
 const onClick = async (cityId: string) => {
