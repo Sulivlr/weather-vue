@@ -4,17 +4,12 @@ export interface City {
 }
 
 export interface ForecastResponse {
-  id: string;
-  name: string;
-  weather: Weather[];
-  main: {
-    temp: number;
-    feels_like: number;
-    humidity: number;
-  };
-  wind: {
-    speed: number;
+  cod: string;
+  city: {
+    id: number;
+    name: string;
   }
+  list: list[];
 }
 
 export interface Weather {
@@ -22,4 +17,16 @@ export interface Weather {
   main: string;
   description: string;
   icon: string;
+}
+
+export interface list {
+  main: {
+    temp: number;
+    feels_like: number;
+    humidity: number;
+  };
+  weather: Weather[];
+  wind: {
+    speed: number;
+  }
 }

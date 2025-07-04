@@ -27,7 +27,7 @@ export const useWeatherStore = defineStore('weatherStore', () => {
   const fetchOneCity = async (id: number) => {
     isFetching.value = true;
     try {
-      const {data} = await axiosApi.get<ForecastResponse | null>(`/weather?appid=5f752d58b77db9b3d3faa06003260874&id=${id}&units=metric`
+      const {data} = await axiosApi.get<ForecastResponse | null>(`/forecast?appid=5f752d58b77db9b3d3faa06003260874&id=${id}&units=metric`
       );
       if (data === null) {
         return null;
