@@ -1,20 +1,20 @@
 <template>
   <div class="container">
-    <div class="weather-card">
+    <div class="weather-card" v-if="store.oneWeather">
       <div class="header">
         <div class="temperature">
-          {{ temperature }}°C
-          <div class="feels-like">Ощущается как {{ feelsLike }}°C</div>
+          {{ weather?.main.temp }}°C
+          <div class="feels-like">Ощущается как {{ weather?.main.feels_like }}°C</div>
         </div>
-        <img :src="iconUrl" :alt="description" class="weather-icon" />
+        <img :src="iconUrl" :alt="store.oneWeather.weather[0].description" class="weather-icon" />
       </div>
 
-      <h2 class="city">{{ cityName }}</h2>
-      <p class="description">{{ description }}</p>
+      <h2 class="city">{{ weather?.name }}</h2>
+      <p class="description">{{ weather?.weather[0].description }}</p>
 
       <div class="info">
-        <div class="humidity">💧 Влажность: <strong>{{ humidity }}%</strong></div>
-        <div class="wind">💨 Ветер: <strong>{{ windSpeed }} м/с</strong></div>
+        <div class="humidity">💧 Влажность: <strong>{{ weather?.main.humidity }}%</strong></div>
+        <div class="wind">💨 Ветер: <strong>{{ weather?.wind.speed }} м/с</strong></div>
       </div>
     </div>
   </div>
@@ -22,19 +22,25 @@
 
 
 <script setup lang="ts">
-import '@/features/cards/cardStyle/style.css'
+import '@/features/cards/cardStyle/style.css';
+import { useWeatherStore } from "@/stores/weatherStore/weatherStore.ts";
+import { useRoute } from "vue-router";
+import { computed, onMounted } from "vue";
 
-const cityName = 'Бишкек'
-const description = 'Переменная облачность'
-const temperature = 22
-const feelsLike = 24
-const humidity = 65
-const windSpeed = 4.2
+const store = useWeatherStore();
+const route = useRoute();
 
-const hour = new Date().getHours()
-const isDay = hour >= 6 && hour < 18
-const icon = `03${isDay ? 'd' : 'n'}`
-const iconUrl = `https://openweathermap.org/img/wn/${icon}@4x.png`
+const weather = computed(() => store.oneWeather);
 
+const iconUrl = computed(() =>
+  weather.value
+    ? `https://openweathermap.org/img/wn/${weather.value.weather[0].icon}@4x.png`
+    : ''
+);
+
+onMounted(() => {
+  const cityId = Number(route.params.id);
+  store.fetchOneCity(cityId);
+});
 </script>
 

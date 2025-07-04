@@ -52,7 +52,7 @@ const onFieldChange = (event: Event) => {
     if (target.value.length > 2) {
       store.fetchCity(target.value);
     }
-  }, 700);
+  }, 300);
 };
 
 const onClick = async (cityId: string) => {
