@@ -20,6 +20,7 @@ export interface Weather {
 }
 
 export interface list {
+  dt_txt: string;
   main: {
     temp: number;
     feels_like: number;

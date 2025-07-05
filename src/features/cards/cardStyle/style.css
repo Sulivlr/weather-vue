@@ -1,7 +1,5 @@
-
-
 .container {
-  padding: 32px;
+  padding: 10px;
   display: flex;
   justify-content: center;
 }
@@ -12,7 +10,7 @@
   border: 1px solid #444;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   border-radius: 20px;
-  padding: 40px;
+  padding: 32px 32px 24px;
   max-width: 700px;
   width: 100%;
   box-sizing: border-box;
@@ -65,27 +63,25 @@
 
 .forecast-container {
   display: flex;
-  gap: 16px;
-  padding: 16px;
+  gap: 12px;
+  padding: 12px 12px 12px;
   flex-wrap: wrap;
   justify-content: center;
-  background-color: #f0f8ff;
-  border-radius: 10px;
+  background-color: #1e1e2f;
+  border-radius: 20px;
+  border: 1px solid #444;
+  margin-top: 16px;
 }
 
 .hour-block {
-  background-color: white;
-  border: 1px solid #ccc;
+  background-color: #2a2a3d;
+  border: 1px solid #444;
   border-radius: 12px;
   padding: 12px;
   text-align: center;
-  width: 100px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.hour {
-  font-weight: bold;
-  margin-bottom: 8px;
+  width: 90px;
+  color: #eee;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .icon {
@@ -93,7 +89,32 @@
   height: 50px;
 }
 
+.hour {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
 .temp {
   margin-top: 8px;
   font-size: 18px;
+  color: #eee;
+}
+
+.toggle-button {
+  margin-bottom: 12px;
+  margin-top: 12px;
+  padding: 10px 20px;
+  background-color: #1e1e2f;
+  color: #eee;
+  border: 1px solid #444;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.toggle-button:hover {
+  background-color: #2a2a40;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }

@@ -8,10 +8,9 @@ export const useWeatherStore = defineStore('weatherStore', () => {
   const items = ref<City[]>([]);
   const oneWeather = ref<ForecastResponse | null>(null);
   const isFetching = ref(false);
-  const isSearching = ref(false);
+  const showHourlyWeather = ref(false);
 
   const fetchCity = async (cityName: string) => {
-    isSearching.value = true;
     try {
       const {data: city} = await axiosApi.get<City | null>(`/weather?&appid=5f752d58b77db9b3d3faa06003260874&q=${cityName}`);
       if (city === null) {
@@ -19,8 +18,8 @@ export const useWeatherStore = defineStore('weatherStore', () => {
      }
      items.value = [city];
      return city;
-    } finally {
-      isSearching.value = false;
+    } catch (error) {
+      console.error('Not Found', error);
     }
   };
 
@@ -43,8 +42,8 @@ export const useWeatherStore = defineStore('weatherStore', () => {
     items,
     oneWeather,
     isFetching,
-    isSearching,
     fetchCity,
     fetchOneCity,
+    showHourlyWeather
   };
 });

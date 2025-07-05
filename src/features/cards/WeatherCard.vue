@@ -3,9 +3,14 @@ import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useWeatherStore } from '@/stores/weatherStore/weatherStore.ts';
 import Spinner from '@/Spinners/Spinner/Spinner.vue';
+import HourlyWeather from "@/features/cards/HourlyWeather.vue";
 
 const store = useWeatherStore();
 const route = useRoute();
+
+const toggleShowHourlyWeather = () => {
+  store.showHourlyWeather = !store.showHourlyWeather;
+};
 
 const weather = computed(() => store.oneWeather);
 const isFetching = computed(() => store.isFetching);
@@ -33,8 +38,8 @@ onMounted(() => {
     <div v-else-if="weather && weather.list.length && weather.list[0].weather.length" class="weather-card">
       <div class="header">
         <div class="temperature">
-          {{ weather.list[0].main.temp }}°C
-          <div class="feels-like">Ощущается как {{ weather.list[0].main.feels_like }}°C</div>
+          {{ Math.round(weather.list[0].main.temp) }}°C
+          <div class="feels-like">Ощущается как {{ Math.round(weather.list[0].main.feels_like) }}°C</div>
         </div>
         <img :src="iconUrl" :alt="weather.list[0].weather[0].description" class="weather-icon" />
       </div>
@@ -44,8 +49,14 @@ onMounted(() => {
 
       <div class="info">
         <div class="humidity">💧 Влажность: <strong>{{ weather.list[0].main.humidity }}%</strong></div>
-        <div class="wind">💨 Ветер: <strong>{{ weather.list[0].wind.speed }} м/с</strong></div>
+        <div class="wind">💨 Ветер: <strong>{{ Math.round(weather.list[0].wind.speed) }} м/с</strong></div>
       </div>
+
+      <button @click="toggleShowHourlyWeather" class="toggle-button">
+        {{ store.showHourlyWeather ? 'Скрыть почасовой прогноз' : 'Показать почасовой прогноз' }}
+      </button>
+
+      <HourlyWeather v-if="store.showHourlyWeather" />
     </div>
 
     <div v-else>

@@ -1,21 +1,35 @@
 <template>
-  <div class="forecast-container">
-    <div v-for="(hour, index) in forecast" :key="index" class="hour-block">
-      <div class="hour">{{ hour.time }}</div>
-      <div class="temp">{{ hour.temp }}°C</div>
+  <div class="forecast-container" v-if="weather && weather.list.length">
+    <div
+      class="hour-block"
+      v-for="(item, index) in weather.list.slice(0, 8)"
+      :key="index"
+    >
+      <div class="hour">{{ formatHour(item.dt_txt) }}</div>
+      <img
+        class="icon"
+        :src="`https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`"
+        :alt="item.weather[0].description"
+      />
+      <div class="temp">{{ Math.round(item.main.temp) }}°C</div>
     </div>
   </div>
 </template>
 
+
 <script setup lang="ts">
 import '../cards/cardStyle/style.css'
+import { useWeatherStore } from "@/stores/weatherStore/weatherStore.ts";
+import { computed } from "vue";
 
+const store = useWeatherStore();
+const weather = computed(() => store.oneWeather);
 
-const forecast = [
-  { time: '09:00', temp: 22, icon: '01d' },
-  { time: '12:00', temp: 26, icon: '02d' },
-  { time: '15:00', temp: 28, icon: '03d' },
-  { time: '18:00', temp: 25, icon: '04d' },
-  { time: '21:00', temp: 21, icon: '10n' },
-];
+const formatHour = (datetime: string): string => {
+  const date = new Date(datetime);
+  return date.toLocaleTimeString('ru-RU', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+};
 </script>
