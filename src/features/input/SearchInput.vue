@@ -1,38 +1,9 @@
-<template>
-  <div class="form-container">
-    <form class="weather-form" @submit.prevent>
-      <div class="input-wrapper">
-        <input
-          v-model="search"
-          @input="onFieldChange"
-          type="text"
-          name="search"
-          placeholder="Select a city"
-          class="city-input"
-        />
-        <button
-          @click.prevent="clearInput"
-          class="clear-button"
-          type="button"
-        >×</button>
-      </div>
-      <button
-        v-for="item in store.items"
-        class="search-button"
-        type="button"
-        @click="() => onClick(item.id)"
-      >
-        Find
-      </button>
-    </form>
-  </div>
-</template>
-
 <script setup lang="ts">
 import '../input/inputStyle/style.css';
-import { ref } from 'vue';
-import { useWeatherStore } from '@/stores/weatherStore/weatherStore.ts';
-import { useRouter } from "vue-router";
+import {computed, ref} from 'vue';
+import {useWeatherStore} from '@/stores/weatherStore/weatherStore.ts';
+import {useRouter} from "vue-router";
+import Spinner from "@/Spinners/Spinner/Spinner.vue";
 
 const store = useWeatherStore();
 const search = ref('');
@@ -52,7 +23,7 @@ const onFieldChange = (event: Event) => {
     if (target.value.length >= 2) {
       store.fetchCity(target.value);
     }
-  }, 500);
+  }, 400);
 };
 
 const onClick = async (cityId: string) => {
@@ -64,3 +35,37 @@ const clearInput = () => {
   store.items = [];
 };
 </script>
+
+
+<template>
+  <div class="form-container">
+      <form class="weather-form" @submit.prevent>
+        <div class="input-wrapper">
+          <input
+            v-model="search"
+            @input="onFieldChange"
+            type="text"
+            name="search"
+            placeholder="Select a city"
+            class="city-input"
+            required
+          />
+          <button
+            @click.prevent="clearInput"
+            class="clear-button"
+            type="button"
+          >×
+          </button>
+        </div>
+        <button
+          v-for="item in store.items"
+          class="search-button"
+          type="button"
+          @click="() => onClick(item.id)"
+        >
+          Find
+        </button>
+      </form>
+  </div>
+</template>
+

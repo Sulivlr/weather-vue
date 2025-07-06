@@ -5,15 +5,16 @@ export interface City {
 
 export interface ForecastResponse {
   cod: string;
+  daily: string;
   city: {
-    id: number;
+    id: string;
     name: string;
   }
   list: list[];
 }
 
 export interface Weather {
-  id: number;
+  id: string;
   main: string;
   description: string;
   icon: string;

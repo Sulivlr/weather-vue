@@ -118,3 +118,72 @@
   background-color: #2a2a40;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
+
+.weekly-button {
+  padding: 10px 20px;
+  background-color: #1e1e2f;
+  color: #eee;
+  border: 1px solid #444;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.weekly-button:hover {
+  background-color: #2a2a40;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  min-height: 48px;
+  align-items: center;
+}
+
+.weekly-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 24px;
+  justify-content: center;
+}
+
+.card {
+  background-color: #1e1e2f;
+  color: #eeeeee;
+  border-radius: 12px;
+  padding: 16px;
+  width: 130px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.icon img {
+  width: 50px;
+  height: 50px;
+}
+
+.date {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.temp {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 8px 0px;
+}
+
+.description {
+  font-size: 12px;
+  color: #aaaaaa;
+}

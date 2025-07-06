@@ -1,3 +1,21 @@
+<script setup lang="ts">
+import '../cards/cardStyle/style.css'
+import {useWeatherStore} from "@/stores/weatherStore/weatherStore.ts";
+import {computed} from "vue";
+
+const store = useWeatherStore();
+const weather = computed(() => store.oneWeather);
+
+const formatHour = (datetime: string): string => {
+  const date = new Date(datetime);
+  return date.toLocaleTimeString('ru-RU', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+};
+</script>
+
+
 <template>
   <div class="forecast-container" v-if="weather && weather.list.length">
     <div
@@ -17,19 +35,3 @@
 </template>
 
 
-<script setup lang="ts">
-import '../cards/cardStyle/style.css'
-import { useWeatherStore } from "@/stores/weatherStore/weatherStore.ts";
-import { computed } from "vue";
-
-const store = useWeatherStore();
-const weather = computed(() => store.oneWeather);
-
-const formatHour = (datetime: string): string => {
-  const date = new Date(datetime);
-  return date.toLocaleTimeString('ru-RU', {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
-};
-</script>

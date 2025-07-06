@@ -1,14 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import SearchPage from '../features/search/SearchPage.vue';
 import WeatherCard from '@/features/cards/WeatherCard.vue';
 import HourlyWeather from '@/features/cards/HourlyWeather.vue';
 import NotFound from "@/features/notfound/NotFound.vue";
+import WeeklyCard from "@/features/cards/WeeklyCard.vue";
+import SearchInput from "@/features/input/SearchInput.vue";
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: SearchPage,
+    component: SearchInput,
   },
   {
     path: '/weather/:id',
@@ -20,7 +21,10 @@ const routes = [
       }
     ]
   },
-
+  {
+    path: '/weather/:id/weekly',
+    component: WeeklyCard
+  },
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
