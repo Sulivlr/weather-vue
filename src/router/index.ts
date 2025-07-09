@@ -3,13 +3,13 @@ import WeatherCard from '@/features/cards/WeatherCard.vue';
 import HourlyWeather from '@/features/cards/HourlyWeather.vue';
 import NotFound from "@/features/notfound/NotFound.vue";
 import WeeklyCard from "@/features/cards/WeeklyCard.vue";
-import SearchInput from "@/features/input/SearchInput.vue";
+import HomePage from "@/features/HomePage/HomePage.vue";
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: SearchInput,
+    component: HomePage,
   },
   {
     path: '/weather/:id',

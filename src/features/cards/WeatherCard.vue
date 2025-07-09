@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, onMounted} from 'vue';
+import {computed, watch} from 'vue';
 import {useRoute} from 'vue-router';
 import {useWeatherStore} from '@/stores/weatherStore/weatherStore.ts';
 import Spinner from '@/Spinners/Spinner/Spinner.vue';
@@ -29,12 +29,12 @@ const iconUrl = computed(() =>
     : ''
 );
 
-onMounted(() => {
-  const cityId = Number(route.params.id);
+watch(() => route.params.id, (newId) => {
+  const cityId = Number(newId);
   if (cityId) {
     store.fetchOneCity(cityId);
   }
-});
+}, { immediate: true });
 
 </script>
 

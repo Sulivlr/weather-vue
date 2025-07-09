@@ -9,9 +9,9 @@
 }
 
 .input-wrapper {
-  position: relative;
   display: flex;
   justify-content: center;
+  position: relative;
 }
 
 .city-input {
@@ -46,49 +46,6 @@
 
 .clear-button:hover {
   color: #444;
-}
-
-.drop-down {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: white;
-  border: 1px solid #ccc;
-  border-top: none;
-  max-height: 200px;
-  overflow-y: auto;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  z-index: 1000;
-  border-radius: 0 0 4px 4px;
-}
-
-.drop-down ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.drop-down li {
-  padding: 10px 12px;
-  cursor: pointer;
-  border-bottom: 1px solid #eee;
-  transition: background-color 0.2s ease;
-}
-
-.drop-down li:last-child {
-  border-bottom: none;
-}
-
-.drop-down li:hover {
-  background-color: #f0f8ff;
-}
-
-.drop-down h5 {
-  margin: 0;
-  font-size: 16px;
-  color: #333;
-  user-select: none;
 }
 
 .search-button {
