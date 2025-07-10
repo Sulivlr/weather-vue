@@ -35,9 +35,9 @@ onMounted(() => {
 
 <template>
   <div class="weekly-container">
-    <div v-if="isFetching">
+    <template v-if="isFetching">
       <Spinner/>
-    </div>
+    </template>
     <template v-else>
       <div
         class="card"

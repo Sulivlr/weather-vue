@@ -40,9 +40,9 @@ watch(() => route.params.id, (newId) => {
 
 <template>
   <div class="container">
-    <div v-if="isFetching">
+    <template v-if="isFetching">
       <Spinner/>
-    </div>
+    </template>
     <div v-else-if="weather && weather.list.length && weather.list[0].weather.length"
          class="weather-card">
       <div class="header">

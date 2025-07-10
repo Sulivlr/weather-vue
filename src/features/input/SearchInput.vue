@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import '../input/inputStyle/style.css';
-import {computed, ref} from 'vue';
+import {ref} from 'vue';
 import {useWeatherStore} from '@/stores/weatherStore/weatherStore.ts';
 import {useRouter} from "vue-router";
-import Spinner from "@/Spinners/Spinner/Spinner.vue";
 
 const store = useWeatherStore();
 const search = ref('');
